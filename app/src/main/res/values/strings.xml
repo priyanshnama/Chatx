@@ -5,4 +5,8 @@
     <string name="txt_send_code">Login</string>
     <string name="txt_phone_number">phone number</string>
     <string name="txt_verification_message">Please Wait while we verify you.</string>
+    <string name="txt_profile_info">Profile Info</string>
+    <string name="txt_profile_photo">Profile Photo</string>
+    <string name="txt_enter_your_name_here">Enter your name here</string>
+    <string name="txt_finish">Finish</string>
 </resources>
