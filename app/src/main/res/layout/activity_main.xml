@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        android:text="Welcome to Chatx"
+        android:text="@string/welcome_message"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/txt_phone"
-            android:text="Enter Your Phone Number"
+            android:text="@string/txt_phoneNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -47,7 +47,9 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:ems="7"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:hint="@string/txt_phone_number"
+            android:importantForAutofill="no" />
 
         <Space
             android:layout_width="match_parent"
@@ -58,8 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="sendCode"
-            android:text="Send Code" />
+            android:text="@string/txt_send_code" />
 
     </LinearLayout>
 
@@ -79,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Enter Your Code"
+            android:text="@string/txt_enter_your_code"
             android:textSize="28sp" />
 
         <Space
@@ -87,25 +88,27 @@
             android:layout_height="32dp" />
 
         <EditText
-            android:id="@+id/verfCode"
+            android:id="@+id/verifyCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="7"
             android:gravity="center"
-            android:inputType="number" />
+            android:inputType="number"
+            android:hint="@string/txt_enter_code"
+            android:importantForAutofill="no" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="32dp" />
 
         <Button
-            android:id="@+id/verfiyCode"
+            android:id="@+id/verify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="verifyCode"
-            android:text="Verify Code" />
+            android:text="@string/txt_verify_code" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
