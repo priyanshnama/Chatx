@@ -3,7 +3,6 @@ package com.priyanshnama.chatx;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -23,8 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout phone, code;
-    private Button sendCode, verify;
-    private EditText phoneNumber, verifyCode;
+    private EditText phoneNumber;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks callBacks;
 
     @Override
@@ -32,18 +30,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
-
         userIsLoggedIn();
 
         phone = findViewById(R.id.phone);
-        code = findViewById(R.id.code);
-        sendCode = findViewById(R.id.sendCode);
-        verify = findViewById(R.id.verify);
+        code = findViewById(R.id.verify);
         phoneNumber = findViewById(R.id.phoneNumber);
-        verifyCode = findViewById(R.id.verifyCode);
 
-        sendCode.setOnClickListener(v -> startPhoneAuth());
-
+        findViewById(R.id.sendCode).setOnClickListener(v -> startPhoneAuth());
         callBacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
@@ -53,13 +46,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
                 revertBack();
-            }
-
-            @Override
-            public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                super.onCodeSent(s, forceResendingToken);
-                phone.setVisibility(View.INVISIBLE);
-                code.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -92,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startPhoneAuth() {
+        phone.setVisibility(View.INVISIBLE);
+        code.setVisibility(View.VISIBLE);
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber.getText().toString(),
                 60,

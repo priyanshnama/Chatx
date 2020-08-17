@@ -1,30 +1,41 @@
 package com.priyanshnama.chatx;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class MainPageActivity extends AppCompatActivity {
-
-    private Button signOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
-        signOut = findViewById(R.id.signOut);
+        FirebaseApp.initializeApp(this);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Button signOut = findViewById(R.id.signOut);
+
+        TextView name = findViewById(R.id.name);
+        TextView email = findViewById(R.id.email);
+
+        assert user != null;
+        name.setText(user.getPhoneNumber());
+        email.setText(user.getUid());
+
         signOut.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
-            return;
         });
     }
 }

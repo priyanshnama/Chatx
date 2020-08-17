@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">Chatx</string>
     <string name="welcome_message">Welcome to Chatx</string>
-    <string name="txt_phoneNumber">Enter Your Phone Number</string>
-    <string name="txt_send_code">Send Code</string>
+    <string name="txt_phoneNumber">Enter Your Phone Number \n with country code</string>
+    <string name="txt_send_code">Login</string>
     <string name="txt_phone_number">phone number</string>
-    <string name="txt_enter_your_code">Enter Your Code</string>
-    <string name="txt_enter_code">enter code</string>
-    <string name="txt_verify_code">Verify Code</string>
+    <string name="txt_verification_message">Please Wait while we verify you.</string>
 </resources>
