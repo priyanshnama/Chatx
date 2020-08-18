@@ -1,6 +1,8 @@
 package com.priyanshnama.chatx;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -20,20 +22,29 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
-
-    private LinearLayout phone, code;
+    private LinearLayout phone, verify, account;
     private EditText phoneNumber;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks callBacks;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
-        userIsLoggedIn();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("account_status", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.apply();
+
+        String account_status = sharedPreferences.getString("account_status", "no");
+        assert account_status != null;
+        if(!account_status.equals("no")) userIsLoggedIn();
 
         phone = findViewById(R.id.phone);
-        code = findViewById(R.id.verify);
+        verify = findViewById(R.id.verify);
+        account = findViewById(R.id.account);
+        account.setVisibility(View.INVISIBLE);
         phoneNumber = findViewById(R.id.phoneNumber);
 
         findViewById(R.id.sendCode).setOnClickListener(v -> startPhoneAuth());
@@ -58,14 +69,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void revertBack() {
         phone.setVisibility(View.VISIBLE);
-        code.setVisibility(View.INVISIBLE);
+        verify.setVisibility(View.INVISIBLE);
         Toast.makeText(this,"Verification Failed Please Try Again",Toast.LENGTH_LONG).show();
     }
 
     private void SignInWithPhoneCredentials(PhoneAuthCredential phoneAuthCredential) {
         FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential).addOnCompleteListener(this, task -> {
-            if(task.isSuccessful())
-                userIsLoggedIn();
+            if(task.isSuccessful()) {
+                account.setVisibility(View.VISIBLE);
+                verify.setVisibility(View.INVISIBLE);
+            }
         });
     }
 
@@ -79,12 +92,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void startPhoneAuth() {
         phone.setVisibility(View.INVISIBLE);
-        code.setVisibility(View.VISIBLE);
+        verify.setVisibility(View.VISIBLE);
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber.getText().toString(),
                 60,
                 TimeUnit.SECONDS,
                 this,
                 callBacks);
+    }
+
+    private boolean accounyCreated(){
+        editor.putString("account_status","yes");
+        editor.commit();
+        return true;
     }
 }

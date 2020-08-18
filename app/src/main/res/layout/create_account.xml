@@ -38,7 +38,7 @@
             android:contentDescription="@string/txt_profile_photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:src="@drawable/blank_profile_pic" />
 
         <Space
             android:layout_width="match_parent"
