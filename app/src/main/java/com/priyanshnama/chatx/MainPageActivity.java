@@ -1,18 +1,18 @@
 package com.priyanshnama.chatx;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.Manifest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Objects;
 
 public class MainPageActivity extends AppCompatActivity {
 
@@ -45,5 +45,13 @@ public class MainPageActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+        
+        getPermissions();
+    }
+
+    private void getPermissions() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS},1);
+        }
     }
 }
