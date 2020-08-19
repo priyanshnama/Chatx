@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
         editor.apply();
 
-        String account_status = sharedPreferences.getString("account_status", "no");
+        String account_status = sharedPreferences.getString("account_status", "yes");
         assert account_status != null;
         if(!account_status.equals("no")) userIsLoggedIn();
 
@@ -76,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private void SignInWithPhoneCredentials(PhoneAuthCredential phoneAuthCredential) {
         FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential).addOnCompleteListener(this, task -> {
             if(task.isSuccessful()) {
-                account.setVisibility(View.VISIBLE);
-                verify.setVisibility(View.INVISIBLE);
+                userIsLoggedIn();
             }
         });
     }
