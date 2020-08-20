@@ -12,9 +12,7 @@ import java.util.ArrayList;
 
 public class FindUserActivity extends AppCompatActivity {
 
-    private RecyclerView mUserList;
-    private RecyclerView.Adapter muserListAdapter;
-    private RecyclerView.LayoutManager userListLayoutManager;
+    private RecyclerView.Adapter<UserListAdapter.UserListViewHolder> userListAdapter;
     private ArrayList<UserObject> userList;
 
     @Override
@@ -30,23 +28,36 @@ public class FindUserActivity extends AppCompatActivity {
 
     public void getContactList(){
         Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null,null);
+        assert phones != null;
         while (phones.moveToNext()){
             String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             String phone = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-            UserObject mContact = new UserObject(name,phone);
+            UserObject mContact = new UserObject(name, phone);
             userList.add(mContact);
-            muserListAdapter.notifyDataSetChanged();
+            userListAdapter.notifyDataSetChanged();
         }
+        phones.close();
     }
 
     private void initializeRecyclerView() {
-        mUserList = findViewById(R.id.userList);
+        RecyclerView mUserList = findViewById(R.id.userList);
         mUserList.setNestedScrollingEnabled(false);
         mUserList.setHasFixedSize(false);
-        userListLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
-        mUserList.setLayoutManager(userListLayoutManager);
-        muserListAdapter = new UserListAdapter(userList);
-        mUserList.setAdapter(muserListAdapter);
+        mUserList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false));
+        userListAdapter = new UserListAdapter(userList);
+        mUserList.setAdapter(userListAdapter);
+    }
+
+    public static class UserObject {
+        private String name, phone;
+
+        public UserObject(String name, String phone){
+            this.name = name;
+            this.phone = phone;
+        }
+
+        public String getName() { return name; }
+        public String getPhone() { return phone; }
     }
 }
