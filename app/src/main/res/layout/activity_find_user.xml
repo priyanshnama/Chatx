@@ -12,12 +12,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:layout_margin="16dp"
+        android:textSize="40sp"
         android:text="Find User Activity"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userList"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:scrollbars="vertical"/>
+
+
 
 </LinearLayout>

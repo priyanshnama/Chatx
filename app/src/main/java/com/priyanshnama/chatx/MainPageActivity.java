@@ -3,7 +3,6 @@ package com.priyanshnama.chatx;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.Manifest;
@@ -31,12 +30,7 @@ public class MainPageActivity extends AppCompatActivity {
         name.setText(user.getPhoneNumber());
         email.setText(user.getUid());
 
-        findViewById(R.id.findUser).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),FindUserActivity.class));
-            }
-        });
+        findViewById(R.id.findUser).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),FindUserActivity.class)));
 
         signOut.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
